@@ -1,0 +1,13 @@
+server {
+    listen 80;
+    server_name localhost;
+    client_max_body_size 50M;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:///www-data/run/dotbot.sock;
+        uwsgi_buffering off;
+        chunked_transfer_encoding off;
+        proxy_cache off;
+    }
+}

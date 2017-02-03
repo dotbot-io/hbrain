@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %} App Name -- Page Not Found{% endblock %}
+
+{% block scripts %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+var source = new EventSource("{{ url_for('sse.stream') }}");
+source.addEventListener('roscore', function(event) {
+    var data = JSON.parse(event.data);
+    console.log(data);
+    $("#1").append('<p>' + data.message + '</p>')
+
+}, false);
+
+source.addEventListener('rostopic', function(event) {
+    var data = JSON.parse(event.data);
+    console.log(data);
+    $("#2").append('<p>' + data.message + '</p>')
+}, false);
+
+source.addEventListener('rosnode', function(event) {
+    var data = JSON.parse(event.data);
+    console.log(data);
+    $("#3").append('<p>' + data.message + '</p>')
+
+}, false);
+
+
+</script>
+{% endblock %}
+
+
+{% block page_content %}
+<h1>test</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" id='1'>
+
+    </div>
+    <div class="col-md-4" id='2'>
+
+    </div>
+    <div class="col-md-4" id='3'>
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}
